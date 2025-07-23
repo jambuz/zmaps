@@ -1,1 +1,1 @@
-pub const PM = @import("pm.zig");
+pub const PM = @import("pm.zig").PM;
