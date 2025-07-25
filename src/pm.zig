@@ -22,7 +22,7 @@ pub const PM = struct {
     }
 
     pub fn findModule(self: *PM, module_name: []const u8) !Map {
-        var buf: [65536]u8 = undefined;
+        var buf: [2 * 1024 * 1024]u8 = undefined; // Alloc a 2MB buffer to hold proc maps data
         const bytes_read = try self.file.readAll(&buf);
         const maps_data = buf[0..bytes_read];
 
@@ -40,7 +40,6 @@ pub const PM = struct {
             min_start = @min(min_start, map.start);
             max_end = @max(max_end, map.end);
 
-            // Only set the path if we haven't found one yet
             if (found_path == null) {
                 found_path = map.path;
             }
